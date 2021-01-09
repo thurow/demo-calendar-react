@@ -1,25 +1,19 @@
 import React from 'react'
-import styled from 'styled-components'
-import { useSelector } from 'react-redux'
-import { Box, Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Theme } from '@material-ui/core'
+import { useDispatch, useSelector } from 'react-redux'
+import { DateObj } from 'dates-generator'
+import { Box, Container, Paper, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core'
 import { CalendarState } from '../../store/modules/calendar/types'
 import { RootState } from '../../store/modules/rootReducer'
-
-const HeaderTableCell = styled(TableCell)`
-  ${({ theme }: { theme: Theme}) => `
-    background: ${theme.palette.primary.main};
-    color: ${theme.palette.common.white};
-  `}
-`
-
-const CalendarTable = styled(Table)`
-  ${({ theme }: { theme: Theme}) => `
-    border: 1px solid ${theme.palette.divider};
-  `}
-`
+import { setSelectedDate } from '../../store/modules/calendar/actions'
+import { CalendarTable, HeaderTableCell } from './styles'
 
 const Calendar = (): JSX.Element => {
-  const { calendar, weekDays } = useSelector<RootState, CalendarState>(state => state.calendar)
+  const { calendar, weekDays, selectedDate } = useSelector<RootState, CalendarState>(state => state.calendar)
+  const dispatch = useDispatch()
+
+  const handleSelectDate = React.useCallback((date: DateObj) => {
+    dispatch(setSelectedDate(date))
+  }, [dispatch])
 
   return (
     <Container maxWidth="lg" component="section">
@@ -40,7 +34,7 @@ const Calendar = (): JSX.Element => {
             {calendar.map((week, idx) => (
               <TableRow key={`${idx}-week`}>
                 {week.map(date => (
-                  <TableCell key={`${date.date}-${date.month}`}>
+                  <TableCell key={`${date.date}-${date.month}`} onClick={() => handleSelectDate(date)}>
                     {date.date}
                   </TableCell>
                 ))}
@@ -49,8 +43,9 @@ const Calendar = (): JSX.Element => {
           </TableBody>
         </CalendarTable>
       </TableContainer>
+      <span>{JSON.stringify(selectedDate)}</span>
     </Container>
   )
 }
 
-export default Calendar
+export { Calendar }

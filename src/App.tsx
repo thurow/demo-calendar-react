@@ -1,11 +1,11 @@
 import React from 'react'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import { StylesProvider, createMuiTheme, ThemeProvider as MuiThemeProvider} from '@material-ui/core/styles'
 import { Provider } from 'react-redux';
-import { store } from './store';
-import Calendar from './components/Calendar/Calendar';
+import CssBaseline from '@material-ui/core/CssBaseline'
 import { ThemeProvider } from 'styled-components';
+import { StylesProvider, createMuiTheme, ThemeProvider as MuiThemeProvider} from '@material-ui/core/styles'
 import { AppBar, Box, Toolbar, Typography } from '@material-ui/core';
+import { store } from './store';
+import { Calendar } from './components/Calendar';
 
 export const App = (): JSX.Element => {
   const theme = React.useMemo(

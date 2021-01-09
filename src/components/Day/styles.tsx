@@ -9,8 +9,13 @@ type DayStylesProps = {
 
 export const DayCell = styled(TableCell)`
   ${(props: DayStylesProps) => `
-    background: ${props.$isWeekendDay ? props.theme.palette.grey[100] : props.theme.palette.common.white}
-    ${props.$isFromOtherMonth && 'pointer-events: none;'}
+    background: ${props.$isWeekendDay ? props.theme.palette.grey[100] : props.theme.palette.common.white};
+    border-right: 1px solid ${props.theme.palette.divider};
+    ${props.$isFromOtherMonth ? 'pointer-events: none;' : ''}
+
+    &:last-child {
+      border-right: none;
+    }
   `}
 `
 

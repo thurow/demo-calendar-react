@@ -3,22 +3,20 @@ import { TableCell, Theme, Typography } from '@material-ui/core'
 
 type DayStylesProps = {
   $isWeekendDay: boolean
+  $isFromOtherMonth: boolean
   theme: Theme
 }
-
-type DayNumberProps = {
-  $isFromOtherMonth: boolean
-} & DayStylesProps
 
 export const DayCell = styled(TableCell)`
   ${(props: DayStylesProps) => `
     background: ${props.$isWeekendDay ? props.theme.palette.grey[100] : props.theme.palette.common.white}
+    ${props.$isFromOtherMonth && 'pointer-events: none;'}
   `}
 `
 
 export const DayNumber = styled(Typography)`
   font-weight: 600;
-  ${(props: DayNumberProps) => `
+  ${(props: DayStylesProps) => `
     color: ${props.$isFromOtherMonth
       ? props.theme.palette.grey[300]
       : props.$isWeekendDay

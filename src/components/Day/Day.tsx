@@ -14,16 +14,19 @@ type Props = {
 export const Day = ({ date, isWeekend }: Props): JSX.Element => {
   const dispatch = useDispatch()
 
-  const handleSelectDate = React.useCallback(() => {
-    dispatch(setSelectedDate(date))
-  }, [dispatch, date])
-
   const isFromOtherMonth = React.useMemo(() => {
     return !isCurrentMonth(date.month)
   }, [date])
 
+  const handleSelectDate = React.useCallback(() => {
+    let payload: DateObj | undefined = date
+
+    if(isFromOtherMonth) payload = undefined
+    dispatch(setSelectedDate(payload))
+  }, [dispatch, date, isFromOtherMonth])
+
   return (
-    <DayCell $isWeekendDay={isWeekend} key={`${date.date}-${date.month}`} onClick={handleSelectDate}>
+    <DayCell $isFromOtherMonth={isFromOtherMonth} $isWeekendDay={isWeekend} key={`${date.date}-${date.month}`} onClick={handleSelectDate}>
       <Box
         display="flex"
         flexDirection="column"

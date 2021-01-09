@@ -1,3 +1,4 @@
+// Manually added because there is no @types/dates-generator
 declare module 'dates-generator' {
   interface DatesGeneratorBody {
     month: number

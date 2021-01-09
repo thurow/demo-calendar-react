@@ -1,19 +1,13 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { DateObj } from 'dates-generator'
-import { Box, Container, Paper, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core'
+import { useSelector } from 'react-redux'
+import { Container, TableBody, TableContainer, TableHead, TableRow } from '@material-ui/core'
 import { CalendarState } from '../../store/modules/calendar/types'
 import { RootState } from '../../store/modules/rootReducer'
-import { setSelectedDate } from '../../store/modules/calendar/actions'
 import { CalendarTable, HeaderTableCell } from './styles'
+import { Day } from '../Day'
 
 const Calendar = (): JSX.Element => {
   const { calendar, weekDays, selectedDate } = useSelector<RootState, CalendarState>(state => state.calendar)
-  const dispatch = useDispatch()
-
-  const handleSelectDate = React.useCallback((date: DateObj) => {
-    dispatch(setSelectedDate(date))
-  }, [dispatch])
 
   return (
     <Container maxWidth="lg" component="section">
@@ -33,11 +27,7 @@ const Calendar = (): JSX.Element => {
           <TableBody>
             {calendar.map((week, idx) => (
               <TableRow key={`${idx}-week`}>
-                {week.map(date => (
-                  <TableCell key={`${date.date}-${date.month}`} onClick={() => handleSelectDate(date)}>
-                    {date.date}
-                  </TableCell>
-                ))}
+                {week.map((date, i) => <Day date={date} isWeekend={i === 0 || i === 6} key={`${date.date}-${date.month}`} />)}
               </TableRow>
             ))}
           </TableBody>

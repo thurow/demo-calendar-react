@@ -47,7 +47,7 @@ const config: webpack.Configuration = {
         files: "./src/**/*",
       },
     }),
-  ],
+  ]
 };
 
 export default config;

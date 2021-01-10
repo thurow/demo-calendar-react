@@ -1,6 +1,6 @@
 import produce from "immer"
 import { SET_SELECTED_DATE } from "../calendar/types";
-import { ADD_REMINDER, Reminder, ReminderActionTypes, UpdateReminderAction, RemindersState, SELECT_REMINDER, UPDATE_REMINDER } from "./types";
+import { ADD_REMINDER, Reminder, ReminderActionTypes, UpdateReminderAction, RemindersState, SELECT_REMINDER, UPDATE_REMINDER, SET_MODAL_IS_OPEN } from "./types";
 
 export const INITIAL_STATE: RemindersState = {
   reminders: [],
@@ -22,6 +22,9 @@ export default function reminders(state = INITIAL_STATE, action: ReminderActionT
       case SET_SELECTED_DATE:
         draftState.selectedReminder = null
         draftState.isReminderModalOpen = true
+        break
+      case SET_MODAL_IS_OPEN:
+        draftState.isReminderModalOpen = action.payload
         break
       case SELECT_REMINDER:
         draftState.selectedReminder = state.reminders.find(x => x.id === action.payload) ?? null

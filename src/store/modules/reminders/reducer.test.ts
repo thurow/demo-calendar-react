@@ -1,7 +1,7 @@
 import { DateObj } from 'dates-generator'
 import { SET_SELECTED_DATE } from '../calendar/types'
 import reminders, { INITIAL_STATE as REMINDER_INITIAL_STATE } from './reducer'
-import { ADD_REMINDER, Reminder, ReminderActionTypes, ReminderInput, RemindersState, SELECT_REMINDER, UPDATE_REMINDER } from './types'
+import { ADD_REMINDER, Reminder, ReminderActionTypes, ReminderInput, RemindersState, SELECT_REMINDER, SET_MODAL_IS_OPEN, UPDATE_REMINDER } from './types'
 
 describe('reminders reducer', () => {
   test('should return initial state', () => {
@@ -32,6 +32,12 @@ describe('reminders reducer', () => {
     )
   })
   test('should open modal', () => {
+    expect(reminders(
+      undefined,
+      { type: SET_MODAL_IS_OPEN, payload: true }
+    )).toEqual({...REMINDER_INITIAL_STATE, isReminderModalOpen: true})
+  })
+  test('should open modal when selected date', () => {
     expect(reminders(
       undefined,
       { type: SET_SELECTED_DATE, payload: {} as DateObj }

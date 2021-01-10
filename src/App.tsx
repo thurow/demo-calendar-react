@@ -6,6 +6,7 @@ import { StylesProvider, createMuiTheme, ThemeProvider as MuiThemeProvider} from
 import { AppBar, Box, Toolbar, Typography } from '@material-ui/core'
 import { store } from './store'
 import { Calendar } from './components'
+import { ReminderModal } from './components/ReminderModal'
 
 export const App = (): JSX.Element => {
   const theme = React.useMemo(
@@ -30,6 +31,7 @@ export const App = (): JSX.Element => {
             </AppBar>
             <Box component="main" marginTop={5}>
               <Calendar />
+              <ReminderModal />
             </Box>
           </ThemeProvider>
         </MuiThemeProvider>

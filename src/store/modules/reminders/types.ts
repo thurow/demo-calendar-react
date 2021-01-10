@@ -4,6 +4,7 @@ import { SetSelectedDateAction } from "../calendar/types"
 export const ADD_REMINDER = "ADD_REMINDER"
 export const SELECT_REMINDER = "SELECT_REMINDER"
 export const UPDATE_REMINDER = "UPDATE_REMINDER"
+export const SET_MODAL_IS_OPEN = "SET_MODAL_IS_OPEN"
 // export const REMOVE_REMINDER = "REMOVE_REMINDER"
 // export const REMOVE_ALL_REMINDERS = "REMOVE_ALL_REMINDER"
 
@@ -21,6 +22,11 @@ export type ReminderInput = Omit<Reminder, 'id'>
 interface AddReminderAction {
   type: typeof ADD_REMINDER
   payload: ReminderInput
+}
+
+interface SetModalIsOpenAction {
+  type: typeof SET_MODAL_IS_OPEN
+  payload: boolean
 }
 
 interface SelectReminderAction {
@@ -42,4 +48,4 @@ export interface RemindersState {
   selectedReminder: Reminder | null
 }
 
-export type ReminderActionTypes = AddReminderAction | UpdateReminderAction | SelectReminderAction | SetSelectedDateAction
+export type ReminderActionTypes = AddReminderAction | SetModalIsOpenAction | UpdateReminderAction | SelectReminderAction | SetSelectedDateAction

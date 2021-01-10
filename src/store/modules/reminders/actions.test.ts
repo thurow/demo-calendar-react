@@ -56,4 +56,12 @@ describe('reminders actions', () => {
 
     expect(actions.updateReminder(ID_TO_UPDATE, REMINDER_TO_UPDATE)).toEqual(EXPECTED_ACTION)
   })
+  test('should create an action to open Reminder modal', () => {
+    const EXPECTED_ACTION: types.ReminderActionTypes = {
+      type: types.SET_MODAL_IS_OPEN,
+      payload: true
+    }
+
+    expect(actions.setModalIsOpen(true)).toEqual(EXPECTED_ACTION)
+  })
 })

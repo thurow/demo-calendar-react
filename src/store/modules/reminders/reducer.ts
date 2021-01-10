@@ -1,5 +1,5 @@
 import produce from "immer";
-import { ADD_REMINDER, ReminderActionTypes, RemindersState, SELECT_REMINDER, SET_REMINDER_MODAL_OPEN, UPDATE_REMINDER } from "./types";
+import { ADD_REMINDER, Reminder, ReminderActionTypes, UpdateReminderAction, RemindersState, SELECT_REMINDER, SET_REMINDER_MODAL_OPEN, UPDATE_REMINDER } from "./types";
 
 const INITIAL_STATE: RemindersState = {
   reminders: [],
@@ -11,7 +11,11 @@ export default function reminders(state = INITIAL_STATE, action: ReminderActionT
   return produce(state, (draftState) => {
     switch (action.type) {
       case ADD_REMINDER:
-        console.log(action.payload)
+        const newReminder: Reminder = {
+          id: crypto.getRandomValues(new Uint32Array(1))[0],
+          ...action.payload
+        }
+        draftState.reminders.push(newReminder)
         draftState.isReminderModalOpen = false
       case SET_REMINDER_MODAL_OPEN:
         draftState.selectedReminder = null
@@ -20,7 +24,8 @@ export default function reminders(state = INITIAL_STATE, action: ReminderActionT
         draftState.selectedReminder = state.reminders.find(x => x.id === action.payload) ?? null
         draftState.isReminderModalOpen = true
       case UPDATE_REMINDER:
-        console.log(action.payload)
+        const updatedReminderIndex = draftState.reminders.findIndex(x => x.id === (action as UpdateReminderAction).payload.id)
+        draftState.reminders[updatedReminderIndex] = {...draftState.reminders[updatedReminderIndex], ...(action as UpdateReminderAction).payload}
         draftState.isReminderModalOpen = false
       default:
     }

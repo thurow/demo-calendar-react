@@ -33,7 +33,7 @@ interface SelectReminderAction {
   payload: number
 }
 
-interface UpdateReminderAction {
+export interface UpdateReminderAction {
   type: typeof UPDATE_REMINDER
   payload: {
     id: number,

@@ -1,4 +1,5 @@
-import { Dates, datesGenerator } from 'dates-generator'
+import { DateObj, Dates, datesGenerator } from 'dates-generator'
+import { Reminder } from '../store/modules/reminders/types'
 
 const date = () => new Date()
 
@@ -15,3 +16,11 @@ export const getCalendar = (): Dates[] => {
 
   return dates
 }
+
+export const filterByDate = (date: DateObj, reminderDate: DateObj): boolean =>
+  reminderDate.date === date.date
+  && reminderDate.month === date.month
+  && reminderDate.year === date.year
+
+export const sortByHour = (a: Reminder, b: Reminder): number =>
+  new Date('1970/01/01 ' + a.time).getTime() - new Date('1970/01/01 ' + b.time).getTime()

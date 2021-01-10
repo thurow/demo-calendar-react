@@ -18,6 +18,7 @@ const Calendar = (): JSX.Element => {
               {weekDays.map(day =>
                 <HeaderTableCell
                   key={day}
+                  width="155px"
                 >
                   {day}
                 </HeaderTableCell>

@@ -6,10 +6,12 @@ export const HeaderTableCell = styled(TableCell)`
     background: ${theme.palette.primary.main};
     color: ${theme.palette.common.white};
   `}
+  text-align: center;
 `
 
 export const CalendarTable = styled(Table)`
   ${({ theme }: { theme: Theme}) => `
     border: 1px solid ${theme.palette.divider};
   `}
+  table-layout: fixed;
 `

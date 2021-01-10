@@ -26,6 +26,6 @@ export const DayNumber = styled(Typography)`
       ? props.theme.palette.grey[300]
       : props.$isWeekendDay
         ? props.theme.palette.primary.light
-        : props.theme.palette.common.black}
+        : props.theme.palette.common.black};
   `}
 `

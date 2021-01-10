@@ -28,7 +28,7 @@ export const App = (): JSX.Element => {
                 <Typography component="h1" variant="h6">Demo Calendar Apointment!</Typography>
               </Toolbar>
             </AppBar>
-            <Box component="main" marginTop={8}>
+            <Box component="main" marginTop={5}>
               <Calendar />
             </Box>
           </ThemeProvider>

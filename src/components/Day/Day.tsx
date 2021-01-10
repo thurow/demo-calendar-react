@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import { setSelectedDate } from '../../store/modules/calendar/actions'
 import { DayCell, DayNumber } from './styles'
 import { isCurrentMonth } from '../../utils'
+import { Reminders } from '../Reminders'
 
 type Props = {
   date: DateObj
@@ -26,7 +27,7 @@ export const Day = ({ date, isWeekend }: Props): JSX.Element => {
   }, [dispatch, date, isFromOtherMonth])
 
   return (
-    <DayCell $isFromOtherMonth={isFromOtherMonth} $isWeekendDay={isWeekend} key={`${date.date}-${date.month}`} onClick={handleSelectDate}>
+    <DayCell width="155px" $isFromOtherMonth={isFromOtherMonth} $isWeekendDay={isWeekend} key={`${date.date}-${date.month}`} onClick={handleSelectDate}>
       <Box
         display="flex"
         flexDirection="column"
@@ -38,6 +39,7 @@ export const Day = ({ date, isWeekend }: Props): JSX.Element => {
         >
           {date.date}
         </DayNumber>
+        <Reminders date={date} />
       </Box>
     </DayCell>
   )

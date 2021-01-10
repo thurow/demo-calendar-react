@@ -2,7 +2,7 @@ import { DateObj, Dates } from "dates-generator";
 
 export const SET_SELECTED_DATE = 'SET_SELECTED_DATE'
 
-interface SetSelectedDateAction {
+export interface SetSelectedDateAction {
   type: typeof SET_SELECTED_DATE
   payload: DateObj | null
 }

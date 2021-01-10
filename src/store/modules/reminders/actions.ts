@@ -1,16 +1,9 @@
-import { ADD_REMINDER, ReminderActionTypes, ReminderInput, SELECT_REMINDER, SET_REMINDER_MODAL_OPEN, UPDATE_REMINDER } from "./types";
+import { ADD_REMINDER, ReminderActionTypes, ReminderInput, SELECT_REMINDER, UPDATE_REMINDER } from "./types";
 
 export function addReminder(data: ReminderInput): ReminderActionTypes {
   return {
     type: ADD_REMINDER,
     payload: data
-  }
-}
-
-export function setReminderModalOpen(isOpen: boolean): ReminderActionTypes {
-  return {
-    type: SET_REMINDER_MODAL_OPEN,
-    payload: isOpen
   }
 }
 

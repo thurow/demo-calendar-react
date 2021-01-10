@@ -1,7 +1,7 @@
 import { DateObj } from "dates-generator"
+import { SetSelectedDateAction } from "../calendar/types"
 
 export const ADD_REMINDER = "ADD_REMINDER"
-export const SET_REMINDER_MODAL_OPEN = "SET_REMINDER_MODAL_OPEN"
 export const SELECT_REMINDER = "SELECT_REMINDER"
 export const UPDATE_REMINDER = "UPDATE_REMINDER"
 // export const REMOVE_REMINDER = "REMOVE_REMINDER"
@@ -23,11 +23,6 @@ interface AddReminderAction {
   payload: ReminderInput
 }
 
-interface SetReminderModalOpenAction {
-  type: typeof SET_REMINDER_MODAL_OPEN
-  payload: boolean
-}
-
 interface SelectReminderAction {
   type: typeof SELECT_REMINDER
   payload: number
@@ -47,4 +42,4 @@ export interface RemindersState {
   selectedReminder: Reminder | null
 }
 
-export type ReminderActionTypes = AddReminderAction | SetReminderModalOpenAction | UpdateReminderAction | SelectReminderAction
+export type ReminderActionTypes = AddReminderAction | UpdateReminderAction | SelectReminderAction | SetSelectedDateAction

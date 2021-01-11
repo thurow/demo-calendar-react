@@ -1,19 +1,18 @@
 import React from 'react'
 import moment from 'moment'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-import { DateObj } from 'dates-generator'
 import { useDispatch, useSelector } from 'react-redux'
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormLabel, InputLabel, TextField, Typography } from '@material-ui/core'
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormLabel, TextField, Typography } from '@material-ui/core'
 import { RootState } from '../../store/modules/rootReducer'
 import { ReminderInput, RemindersState } from '../../store/modules/reminders/types'
 import { addReminder, setModalIsOpen, updateReminder } from '../../store/modules/reminders/actions'
 import { CalendarState } from '../../store/modules/calendar/types'
-import { TimePicker } from '@material-ui/pickers'
+import { DatePicker, TimePicker } from '@material-ui/pickers'
 import { ColorInput } from './styles'
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
 
 type FormInput = {
-  date: DateObj
+  date: MaterialUiPickersDate
   time: MaterialUiPickersDate
   title: string
   city: string
@@ -24,17 +23,25 @@ export const ReminderModal = (): JSX.Element => {
   const { isReminderModalOpen, selectedReminder } = useSelector<RootState, RemindersState>(state => state.reminders)
   const { selectedDate } = useSelector<RootState, CalendarState>(state => state.calendar)
   const dispatch = useDispatch()
-  const { handleSubmit, register, errors, control, getValues } = useForm<FormInput>({
+  const { handleSubmit, register, errors, control, reset } = useForm<FormInput>({
     defaultValues: {
       city: selectedReminder?.city ?? '',
       color: selectedReminder?.color ?? '#5616C6',
-      date: selectedReminder?.date ?? undefined,
-      time: selectedReminder?.time ?? undefined,
+      date: moment(selectedReminder?.date) ?? undefined,
+      time: moment(selectedReminder?.time) ?? undefined,
       title: selectedReminder?.title ?? ''
     },
     shouldUnregister: false
   })
 
+  /**
+   * - Date input
+   * - Reset values on enter at dialog
+   * - Edit Date
+   * - Fab to Add reminder global
+   * - Test edit flow
+   * - Add Weather integration
+   */
   const handleCloseDialog = React.useCallback(() => {
     dispatch(setModalIsOpen(false))
   }, [dispatch])
@@ -51,21 +58,54 @@ export const ReminderModal = (): JSX.Element => {
   }, [selectedDate])
 
   const submitForm: SubmitHandler<FormInput> = React.useCallback((data) => {
+    if (!data.date || !data.time) return
+    const body: ReminderInput = {
+      ...data,
+      date: {
+        date: data.date.date(),
+        month: data.date.month(),
+        year: data.date.year()
+      },
+      time: data.time.format('LT') ?? '',
+    }
     if (selectedReminder) {
-      const body: ReminderInput = {
-        ...data,
-        time: data.time?.format('LT') ?? '',
-      }
       dispatch(updateReminder(selectedReminder.id, body))
     } else {
-      const body: ReminderInput = {
-        ...data,
-        time: data.time?.format('LT') ?? '',
-        date: selectedDate as DateObj
-      }
       dispatch(addReminder(body))
     }
-  }, [selectedReminder, dispatch, selectedDate])
+  }, [selectedReminder, dispatch])
+
+  React.useEffect(() => {
+    if (selectedDate) {
+      reset({
+        date: moment(
+          {
+            year: selectedDate.year,
+            month: selectedDate.month,
+            day: selectedDate.date
+          }
+        )
+      })
+    }
+  }, [selectedDate, reset])
+
+  React.useEffect(() => {
+    if (selectedReminder) {
+      reset({
+        city: selectedReminder.city,
+        color: selectedReminder.color,
+        time: moment(selectedReminder.time),
+        date: moment(
+          {
+            year: selectedReminder.date.year,
+            month: selectedReminder.date.month,
+            day: selectedReminder.date.date
+          }
+        ),
+        title: selectedReminder.title
+      })
+    }
+  }, [selectedReminder, reset])
 
   return (
     <Dialog
@@ -88,6 +128,24 @@ export const ReminderModal = (): JSX.Element => {
             error={!!errors.title}
             helperText={errors.title?.type === "maxLength" && 'Maximum number of characters is 30'}
             inputRef={register({ required: true, maxLength: 30 })}
+          />
+          <Controller
+            name="date"
+            control={control}
+            rules={{ required: true }}
+            render={({ref, ...props}, { invalid }) => (
+              <DatePicker
+                label="Date"
+                fullWidth
+                format="LL"
+                maxDate={moment('01/31/2021')}
+                minDate={moment('01/01/2021')}
+                margin="dense"
+                inputRef={ref}
+                error={invalid}
+                {...props}
+              />
+            )}
           />
           <Controller
             name="time"

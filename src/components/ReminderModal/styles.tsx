@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ColorInput = styled.input`
-  border-radius: 4px;
+  border-radius: 0px;
   height: 35px;
   width: 35px;
   margin-right: 4px;
@@ -16,6 +16,6 @@ export const ColorInput = styled.input`
 
   &::-webkit-color-swatch {
     border: none;
-    border-radius: 100%;
+    border-radius: 6px;
   }
 `

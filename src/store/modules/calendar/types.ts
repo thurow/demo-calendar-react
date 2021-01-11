@@ -10,7 +10,7 @@ export interface SetSelectedDateAction {
 export interface CalendarState {
   weekDays: string[]
   calendar: Dates[]
-  selectedDate: DateObj | null
+  selectedDate?: DateObj | null
 }
 
 export type CalendarActionTypes = SetSelectedDateAction

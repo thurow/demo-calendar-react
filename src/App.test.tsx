@@ -5,5 +5,5 @@ import { App } from './App'
 test('should work', () => {
   render(<App />)
 
-  expect(screen.getByText('Demo Calendar Apointment!')).toBeInTheDocument()
+  expect(screen.getByText('Demo Calendar Appointment!')).toBeInTheDocument()
 })

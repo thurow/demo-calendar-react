@@ -2,7 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormLabel, TextField, Typography } from '@material-ui/core'
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormLabel, TextField, Typography } from '@material-ui/core'
 import { RootState } from '../../store/modules/rootReducer'
 import { ReminderInput, RemindersState } from '../../store/modules/reminders/types'
 import { addReminder, setModalIsOpen, updateReminder } from '../../store/modules/reminders/actions'
@@ -23,7 +23,7 @@ export const ReminderModal = (): JSX.Element => {
   const { isReminderModalOpen, selectedReminder } = useSelector<RootState, RemindersState>(state => state.reminders)
   const { selectedDate } = useSelector<RootState, CalendarState>(state => state.calendar)
   const dispatch = useDispatch()
-  const { handleSubmit, register, errors, control, reset } = useForm<FormInput>({
+  const { handleSubmit, register, errors, control, reset, watch } = useForm<FormInput>({
     defaultValues: {
       city: selectedReminder?.city ?? '',
       color: selectedReminder?.color ?? '#5616C6',
@@ -34,9 +34,9 @@ export const ReminderModal = (): JSX.Element => {
     shouldUnregister: false
   })
 
+  const watchedTitle = watch('title')
+
   /**
-   * - Date input
-   * - Reset values on enter at dialog
    * - Edit Date
    * - Fab to Add reminder global
    * - Test edit flow
@@ -45,17 +45,6 @@ export const ReminderModal = (): JSX.Element => {
   const handleCloseDialog = React.useCallback(() => {
     dispatch(setModalIsOpen(false))
   }, [dispatch])
-
-  const selectedDateString = React.useMemo(() => {
-    if (!selectedDate) return ''
-    return moment(
-      {
-        year: selectedDate.year,
-        month: selectedDate.month,
-        day: selectedDate.date
-      }
-    ).format('dddd, MMMM Do of YYYY')
-  }, [selectedDate])
 
   const submitForm: SubmitHandler<FormInput> = React.useCallback((data) => {
     if (!data.date || !data.time) return
@@ -112,14 +101,12 @@ export const ReminderModal = (): JSX.Element => {
       open={isReminderModalOpen}
       onClose={handleCloseDialog}
       aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">Reminder Dialog</DialogTitle>
+      <DialogTitle id="alert-dialog-title">
+        {selectedReminder ? `Edit ${watchedTitle} reminder` : `Add ${watchedTitle ?? ''} reminder`}
+      </DialogTitle>
       <form onSubmit={handleSubmit(submitForm)}>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description" variant="body1">
-            Date selected: <strong>{selectedDateString}</strong>
-          </DialogContentText>
           <TextField
             fullWidth
             margin="dense"

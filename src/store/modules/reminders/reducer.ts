@@ -1,6 +1,6 @@
 import produce from "immer"
 import { SET_SELECTED_DATE } from "../calendar/types";
-import { ADD_REMINDER, Reminder, ReminderActionTypes, UpdateReminderAction, RemindersState, SELECT_REMINDER, UPDATE_REMINDER, SET_MODAL_IS_OPEN } from "./types";
+import { ADD_REMINDER, Reminder, ReminderActionTypes, UpdateReminderAction, RemindersState, SELECT_REMINDER, UPDATE_REMINDER, SET_MODAL_IS_OPEN, REMOVE_REMINDER } from "./types";
 
 export const INITIAL_STATE: RemindersState = {
   reminders: [],
@@ -34,6 +34,13 @@ export default function reminders(state = INITIAL_STATE, action: ReminderActionT
         const updatedReminderIndex = draftState.reminders.findIndex(x => x.id === (action as UpdateReminderAction).payload.id)
         if (updatedReminderIndex === -1) break
         draftState.reminders[updatedReminderIndex] = {...draftState.reminders[updatedReminderIndex], ...(action as UpdateReminderAction).payload.reminder}
+        draftState.isReminderModalOpen = false
+        break
+      case REMOVE_REMINDER:
+        const reminderToRemoveIndex = state.reminders.findIndex(x => x.id === action.payload)
+        if (reminderToRemoveIndex === -1) break
+        draftState.reminders.splice(reminderToRemoveIndex, 1)
+        draftState.selectedReminder = null
         draftState.isReminderModalOpen = false
         break
       default:

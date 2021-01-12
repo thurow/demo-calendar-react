@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormLabel, TextField, Typography } from '@material-ui/core'
 import { RootState } from '../../store/modules/rootReducer'
 import { ReminderInput, RemindersState } from '../../store/modules/reminders/types'
-import { addReminder, setModalIsOpen, updateReminder } from '../../store/modules/reminders/actions'
+import { addReminder, removeReminder, setModalIsOpen, updateReminder } from '../../store/modules/reminders/actions'
 import { CalendarState } from '../../store/modules/calendar/types'
 import { DatePicker, TimePicker } from '@material-ui/pickers'
 import { ColorInput } from './styles'
@@ -36,12 +36,6 @@ export const ReminderModal = (): JSX.Element => {
 
   const watchedTitle = watch('title')
 
-  /**
-   * - Edit Date
-   * - Fab to Add reminder global
-   * - Test edit flow
-   * - Add Weather integration
-   */
   const handleCloseDialog = React.useCallback(() => {
     dispatch(setModalIsOpen(false))
   }, [dispatch])
@@ -55,7 +49,7 @@ export const ReminderModal = (): JSX.Element => {
         month: data.date.month(),
         year: data.date.year()
       },
-      time: data.time.format('LT') ?? '',
+      time: data.time.format('LT'),
     }
     if (selectedReminder) {
       dispatch(updateReminder(selectedReminder.id, body))
@@ -64,6 +58,7 @@ export const ReminderModal = (): JSX.Element => {
     }
   }, [selectedReminder, dispatch])
 
+  // select a date in the form when there is a selected date
   React.useEffect(() => {
     if (selectedDate) {
       reset({
@@ -78,6 +73,20 @@ export const ReminderModal = (): JSX.Element => {
     }
   }, [selectedDate, reset])
 
+  // reset form values when closes modal
+  React.useEffect(() => {
+    if (!isReminderModalOpen) {
+      reset({
+        city: undefined,
+        color: '#5616C6',
+        time: undefined,
+        title: undefined,
+        date: undefined
+      })
+    }
+  }, [isReminderModalOpen, reset])
+
+  // populate form with selected reminder
   React.useEffect(() => {
     if (selectedReminder) {
       reset({
@@ -103,7 +112,7 @@ export const ReminderModal = (): JSX.Element => {
       aria-labelledby="alert-dialog-title"
     >
       <DialogTitle id="alert-dialog-title">
-        {selectedReminder ? `Edit ${watchedTitle} reminder` : `Add ${watchedTitle ?? ''} reminder`}
+        {selectedReminder ? `Editing ${watchedTitle} reminder` : `Adding ${watchedTitle ?? ''} reminder`}
       </DialogTitle>
       <form onSubmit={handleSubmit(submitForm)}>
         <DialogContent>
@@ -181,18 +190,32 @@ export const ReminderModal = (): JSX.Element => {
             />
           </Box>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDialog} title="Cancel">
-            Cancel
-          </Button>
-          <Button
-            type="submit"
-            color="primary"
-            variant="contained"
-            title="Save"
-          >
-            Save
-          </Button>
+        <DialogActions style={{ justifyContent: 'space-between' }}>
+          <Box>
+            {selectedReminder &&
+              <Button
+                title="Remove Reminder"
+                color="secondary"
+                onClick={() => dispatch(removeReminder(selectedReminder.id))}
+              >
+                Remove Reminder
+              </Button>
+            }
+          </Box>
+          <Box>
+            <Button onClick={handleCloseDialog} title="Cancel">
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              color="primary"
+              variant="contained"
+              title="Save"
+              style={{ marginLeft: 8 }}
+            >
+              Save
+            </Button>
+          </Box>
         </DialogActions>
       </form>
     </Dialog>

@@ -64,4 +64,12 @@ describe('reminders actions', () => {
 
     expect(actions.setModalIsOpen(true)).toEqual(EXPECTED_ACTION)
   })
+  test('should create an action to remove a Reminder', () => {
+    const EXPECTED_ACTION: types.ReminderActionTypes = {
+      type: types.REMOVE_REMINDER,
+      payload: 1
+    }
+
+    expect(actions.removeReminder(1)).toEqual(EXPECTED_ACTION)
+  })
 })

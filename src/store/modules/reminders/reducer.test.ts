@@ -1,7 +1,7 @@
 import { DateObj } from 'dates-generator'
 import { SET_SELECTED_DATE } from '../calendar/types'
 import reminders, { INITIAL_STATE as REMINDER_INITIAL_STATE } from './reducer'
-import { ADD_REMINDER, Reminder, ReminderActionTypes, ReminderInput, RemindersState, SELECT_REMINDER, SET_MODAL_IS_OPEN, UPDATE_REMINDER } from './types'
+import { ADD_REMINDER, Reminder, ReminderActionTypes, ReminderInput, RemindersState, REMOVE_REMINDER, SELECT_REMINDER, SET_MODAL_IS_OPEN, UPDATE_REMINDER } from './types'
 
 describe('reminders reducer', () => {
   test('should return initial state', () => {
@@ -121,5 +121,37 @@ describe('reminders reducer', () => {
     expect(result.reminders[0]).toEqual(
       expect.objectContaining(REMINDER_INPUT_BODY)
     )
+  })
+  test('should remove reminder', () => {
+    const REMINDER_ID_TO_REMOVE = Math.random()
+    const REMINDER_TO_REMOVE: Reminder = {
+      id: REMINDER_ID_TO_REMOVE,
+      title: 'Test Add',
+      city: 'Indaial',
+      color: '#000',
+      date: {
+        date: 3,
+        month: 4,
+        year: 2021
+      },
+      time: '7:06 AM'
+    }
+
+    const INITIAL_STATE: RemindersState = {
+      isReminderModalOpen: false,
+      selectedReminder: null,
+      reminders: [REMINDER_TO_REMOVE]
+    }
+
+    const INPUT: ReminderActionTypes = {
+      type: REMOVE_REMINDER,
+      payload: REMINDER_ID_TO_REMOVE
+    }
+
+    const result = reminders(INITIAL_STATE, INPUT)
+
+    expect(result.reminders).toEqual([])
+    expect(result.isReminderModalOpen).toBeFalsy()
+    expect(result.selectedReminder).toBeNull()
   })
 })

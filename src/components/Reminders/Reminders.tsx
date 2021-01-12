@@ -6,7 +6,7 @@ import { RemindersState } from '../../store/modules/reminders/types'
 import { Box } from '@material-ui/core'
 import { ReminderChip } from './styles'
 import { filterByDate, sortByHour } from '../../utils'
-import { selectReminder } from '../../store/modules/reminders/actions'
+import { removeReminder, selectReminder } from '../../store/modules/reminders/actions'
 
 type Props = {
   date: DateObj
@@ -43,6 +43,7 @@ export const Reminders = ({ date }: Props): JSX.Element => {
           label={reminder.title}
           size="small"
           onClick={(e) => handleEditReminder(e, reminder.id)}
+          onDelete={() => dispatch(removeReminder(reminder.id))}
         />
       )}
     </Box>

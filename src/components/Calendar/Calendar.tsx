@@ -7,7 +7,7 @@ import { CalendarTable, HeaderTableCell } from './styles'
 import { Day } from '../Day'
 
 const Calendar = (): JSX.Element => {
-  const { calendar, weekDays, selectedDate } = useSelector<RootState, CalendarState>(state => state.calendar)
+  const { calendar, weekDays } = useSelector<RootState, CalendarState>(state => state.calendar)
 
   return (
     <Container maxWidth="lg" component="section">
@@ -34,7 +34,6 @@ const Calendar = (): JSX.Element => {
           </TableBody>
         </CalendarTable>
       </TableContainer>
-      <span>{JSON.stringify(selectedDate)}</span>
     </Container>
   )
 }

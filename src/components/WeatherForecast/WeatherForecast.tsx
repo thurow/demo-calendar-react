@@ -2,6 +2,7 @@ import React from 'react'
 import { Moment } from 'moment'
 import { getWeatherForecast, WeatherDtObj, WeatherObj } from '../../services/api'
 import { getDateFromWeatherForecastApi } from '../../utils'
+import { Box, Typography } from '@material-ui/core'
 
 type Props = {
   date: Moment
@@ -33,14 +34,23 @@ export const WeatherForecast = ({ city, date }: Props): JSX.Element => {
   }, [getWeatherValues])
 
   return (
-    <div>
-      {weatherForecastToDate && (
-        <>
-          <span>{weatherForecastToDate.main}</span>
+    <Box
+      display="flex"
+      flexDirection="column"
+      minHeight="50px"
+      mt={2}
+    >
+      <Typography variant="subtitle1" color="textSecondary">Weather Forecast</Typography>
+      {weatherForecastToDate ? (
+        <Box
+          display="flex"
+          alignItems="center"
+        >
           {weatherForecastToDate.icon &&
             <img src={`http://openweathermap.org/img/w/${weatherForecastToDate.icon}.png`} />}
-        </>
-      )}
-    </div>
+          <Typography variant="body1">{weatherForecastToDate.main}</Typography>
+        </Box>
+      ): <Typography variant="caption">No data.</Typography>}
+    </Box>
   )
 }

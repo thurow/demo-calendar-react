@@ -177,25 +177,30 @@ export const ReminderModal = (): JSX.Element => {
 
           <Box
             display="flex"
-            justifyContent="flex-start"
-            flexDirection="column"
-            mt={2}
+            justifyContent={watchedDate && currentCity ? 'space-between': `flex-start`}
           >
-            <FormLabel htmlFor="color">Reminder color</FormLabel>
-            <Controller
-              name="color"
-              control={control}
-              rules={{ required: true }}
-              defaultValue="#5616C6"
-              render={(props) => (
-                <Box display="flex" alignItems="center" mt={1}>
-                  <ColorInput type="color" {...props} />
-                  <Typography variant="body1">{props.value}</Typography>
-                </Box>
-              )}
-            />
+            <Box
+              display="flex"
+              justifyContent="flex-start"
+              flexDirection="column"
+              mt={2}
+            >
+              <FormLabel htmlFor="color">Reminder color</FormLabel>
+              <Controller
+                name="color"
+                control={control}
+                rules={{ required: true }}
+                defaultValue="#5616C6"
+                render={(props) => (
+                  <Box display="flex" alignItems="center" mt={1}>
+                    <ColorInput type="color" {...props} />
+                    <Typography variant="body1">{props.value}</Typography>
+                  </Box>
+                )}
+              />
+            </Box>
+            {watchedDate && currentCity && <WeatherForecast city={currentCity} date={watchedDate} />}
           </Box>
-          {watchedDate && currentCity && <WeatherForecast city={currentCity} date={watchedDate} />}
         </DialogContent>
         <DialogActions style={{ justifyContent: 'space-between' }}>
           <Box>

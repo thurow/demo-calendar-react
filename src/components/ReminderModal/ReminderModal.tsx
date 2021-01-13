@@ -124,6 +124,7 @@ export const ReminderModal = (): JSX.Element => {
             fullWidth
             margin="dense"
             name="title"
+            id="title"
             label="Reminder name"
             error={!!errors.title}
             helperText={errors.title?.type === "maxLength" && 'Maximum number of characters is 30'}
@@ -131,6 +132,7 @@ export const ReminderModal = (): JSX.Element => {
           />
           <TextField
             name="city"
+            id="city"
             label="City name"
             fullWidth
             margin="dense"
@@ -140,6 +142,7 @@ export const ReminderModal = (): JSX.Element => {
           />
           <Controller
             name="date"
+            id="date"
             control={control}
             rules={{ required: true }}
             defaultValue={null}
@@ -159,6 +162,7 @@ export const ReminderModal = (): JSX.Element => {
           />
           <Controller
             name="time"
+            id="time"
             control={control}
             rules={{ required: true }}
             defaultValue={null}
@@ -188,6 +192,7 @@ export const ReminderModal = (): JSX.Element => {
               <FormLabel htmlFor="color">Reminder color</FormLabel>
               <Controller
                 name="color"
+                id="color"
                 control={control}
                 rules={{ required: true }}
                 defaultValue="#5616C6"

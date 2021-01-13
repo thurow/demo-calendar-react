@@ -79,9 +79,8 @@ export const ReminderModal = (): JSX.Element => {
       reset({
         city: undefined,
         color: '#5616C6',
-        time: undefined,
+        time: null,
         title: undefined,
-        date: undefined
       })
     }
   }, [isReminderModalOpen, reset])
@@ -129,6 +128,7 @@ export const ReminderModal = (): JSX.Element => {
             name="date"
             control={control}
             rules={{ required: true }}
+            defaultValue={null}
             render={({ref, ...props}, { invalid }) => (
               <DatePicker
                 label="Date"

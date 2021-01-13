@@ -24,3 +24,5 @@ export const filterByDate = (date: DateObj, reminderDate: DateObj): boolean =>
 
 export const sortByHour = (a: Reminder, b: Reminder): number =>
   new Date('1970/01/01 ' + a.time).getTime() - new Date('1970/01/01 ' + b.time).getTime()
+
+export const isPastDay = (day: DateObj): boolean => day.month === date().getMonth() && day.date < date().getDate()

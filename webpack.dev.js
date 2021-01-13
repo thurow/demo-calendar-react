@@ -1,8 +1,9 @@
-import path from "path";
-import webpack from "webpack";
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+/* eslint-disable @typescript-eslint/no-var-requires */
+const path = require("path")
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+const HtmlWebPackPlugin = require('html-webpack-plugin')
 
-const config: webpack.Configuration = {
+module.exports = {
   mode: "development",
   entry: "./src/index.tsx",
   module: {
@@ -47,7 +48,9 @@ const config: webpack.Configuration = {
         files: "./src/**/*",
       },
     }),
+    new HtmlWebPackPlugin({
+      inject: true,
+      template: path.join(__dirname, 'public', 'index.html')
+    })
   ]
 };
-
-export default config;

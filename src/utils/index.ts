@@ -1,3 +1,4 @@
+import moment, { Moment } from 'moment'
 import { DateObj, Dates, datesGenerator } from 'dates-generator'
 import { Reminder } from '../store/modules/reminders/types'
 
@@ -26,3 +27,5 @@ export const sortByHour = (a: Reminder, b: Reminder): number =>
   new Date('1970/01/01 ' + a.time).getTime() - new Date('1970/01/01 ' + b.time).getTime()
 
 export const isPastDay = (day: DateObj): boolean => day.month === date().getMonth() && day.date < date().getDate()
+
+export const getDateFromWeatherForecastApi = (dt: number): Moment => moment(dt * 1000)

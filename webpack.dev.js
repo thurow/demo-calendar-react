@@ -2,6 +2,7 @@
 const path = require("path")
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
+const DotenvWebpackPlugin = require('dotenv-webpack')
 
 module.exports = {
   mode: "development",
@@ -51,6 +52,7 @@ module.exports = {
     new HtmlWebPackPlugin({
       inject: true,
       template: path.join(__dirname, 'public', 'index.html')
-    })
+    }),
+    new DotenvWebpackPlugin({ systemvars: true })
   ]
 };

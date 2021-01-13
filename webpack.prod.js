@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { join } = require("path");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const DotenvWebpackPlugin = require('dotenv-webpack')
 
 module.exports = {
   mode: "production",
@@ -31,6 +32,7 @@ module.exports = {
     filename: "bundle.js",
   },
   plugins: [
+    new DotenvWebpackPlugin({ systemvars: true }),
     new CleanWebpackPlugin()
   ]
 };

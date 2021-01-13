@@ -10,6 +10,7 @@ import { CalendarState } from '../../store/modules/calendar/types'
 import { DatePicker, TimePicker } from '@material-ui/pickers'
 import { ColorInput } from './styles'
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
+import { WeatherForecast } from '../WeatherForecast'
 
 type FormInput = {
   date: MaterialUiPickersDate
@@ -20,6 +21,7 @@ type FormInput = {
 }
 
 export const ReminderModal = (): JSX.Element => {
+  const [currentCity, setCurrentCity] = React.useState<string | null>(null)
   const { isReminderModalOpen, selectedReminder } = useSelector<RootState, RemindersState>(state => state.reminders)
   const { selectedDate } = useSelector<RootState, CalendarState>(state => state.calendar)
   const dispatch = useDispatch()
@@ -35,6 +37,7 @@ export const ReminderModal = (): JSX.Element => {
   })
 
   const watchedTitle = watch('title')
+  const watchedDate = watch('date')
 
   const handleCloseDialog = React.useCallback(() => {
     dispatch(setModalIsOpen(false))
@@ -82,6 +85,7 @@ export const ReminderModal = (): JSX.Element => {
         time: null,
         title: undefined,
       })
+      setCurrentCity(null)
     }
   }, [isReminderModalOpen, reset])
 
@@ -101,6 +105,7 @@ export const ReminderModal = (): JSX.Element => {
         ),
         title: selectedReminder.title
       })
+      setCurrentCity(selectedReminder.city)
     }
   }, [selectedReminder, reset])
 
@@ -123,6 +128,15 @@ export const ReminderModal = (): JSX.Element => {
             error={!!errors.title}
             helperText={errors.title?.type === "maxLength" && 'Maximum number of characters is 30'}
             inputRef={register({ required: true, maxLength: 30 })}
+          />
+          <TextField
+            name="city"
+            label="City name"
+            fullWidth
+            margin="dense"
+            error={!!errors.city}
+            inputRef={register({ required: true })}
+            onBlur={(e) => setCurrentCity(e.target.value)}
           />
           <Controller
             name="date"
@@ -160,14 +174,6 @@ export const ReminderModal = (): JSX.Element => {
               />
             )}
           />
-          <TextField
-            name="city"
-            label="City name"
-            fullWidth
-            margin="dense"
-            error={!!errors.city}
-            inputRef={register({ required: true })}
-          />
 
           <Box
             display="flex"
@@ -189,6 +195,7 @@ export const ReminderModal = (): JSX.Element => {
               )}
             />
           </Box>
+          {watchedDate && currentCity && <WeatherForecast city={currentCity} date={watchedDate} />}
         </DialogContent>
         <DialogActions style={{ justifyContent: 'space-between' }}>
           <Box>

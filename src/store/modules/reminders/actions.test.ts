@@ -1,3 +1,4 @@
+import { DateObj } from 'dates-generator'
 import * as actions from './actions'
 import * as types from './types'
 
@@ -71,5 +72,18 @@ describe('reminders actions', () => {
     }
 
     expect(actions.removeReminder(1)).toEqual(EXPECTED_ACTION)
+  })
+  test('should create an action to remove all Reminders', () => {
+    const DATE_TO_DELETE_ALL_REMINDERS: DateObj = {
+      date: 3,
+      month: 4,
+      year: 2021
+    }
+    const EXPECTED_ACTION: types.ReminderActionTypes = {
+      type: types.REMOVE_ALL_REMINDERS,
+      payload: DATE_TO_DELETE_ALL_REMINDERS
+    }
+
+    expect(actions.removeAllReminders(DATE_TO_DELETE_ALL_REMINDERS)).toEqual(EXPECTED_ACTION)
   })
 })

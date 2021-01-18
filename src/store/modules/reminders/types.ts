@@ -6,7 +6,7 @@ export const SELECT_REMINDER = "SELECT_REMINDER"
 export const UPDATE_REMINDER = "UPDATE_REMINDER"
 export const SET_MODAL_IS_OPEN = "SET_MODAL_IS_OPEN"
 export const REMOVE_REMINDER = "REMOVE_REMINDER"
-// export const REMOVE_ALL_REMINDERS = "REMOVE_ALL_REMINDER"
+export const REMOVE_ALL_REMINDERS = "REMOVE_ALL_REMINDER"
 
 export interface Reminder {
   id: number
@@ -47,10 +47,17 @@ export interface RemoveReminderAction {
   payload: number
 }
 
+export interface RemoveAllReminderAction {
+  type: typeof REMOVE_ALL_REMINDERS,
+  payload: DateObj
+}
+
 export interface RemindersState {
   reminders: Reminder[]
   isReminderModalOpen: boolean
   selectedReminder: Reminder | null
 }
 
-export type ReminderActionTypes = AddReminderAction | SetModalIsOpenAction | UpdateReminderAction | SelectReminderAction | SetSelectedDateAction | RemoveReminderAction
+export type ReminderActionTypes = AddReminderAction | SetModalIsOpenAction
+  | UpdateReminderAction | SelectReminderAction | SetSelectedDateAction
+  | RemoveReminderAction | RemoveAllReminderAction

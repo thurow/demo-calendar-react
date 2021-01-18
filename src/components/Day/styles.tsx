@@ -1,10 +1,15 @@
 import styled from 'styled-components'
-import { TableCell, Theme, Typography } from '@material-ui/core'
+import { IconButton, TableCell, Theme, Typography } from '@material-ui/core'
 
 type DayStylesProps = {
   $isWeekendDay: boolean
   $isFromOtherMonth: boolean
   $pastDay: boolean
+  theme: Theme
+}
+
+type DeleteAllRemindersBtnProps = {
+  $canRemoveAllReminders: boolean,
   theme: Theme
 }
 
@@ -28,5 +33,14 @@ export const DayNumber = styled(Typography)`
       : props.$isWeekendDay
         ? props.theme.palette.primary.light
         : props.theme.palette.common.black};
+  `}
+`
+
+export const DeleteAllRemindersBtn = styled(IconButton)`
+  position: absolute;
+  top: -3px;
+  right: -20px;
+  ${(props: DeleteAllRemindersBtnProps) => `
+    display: ${props.$canRemoveAllReminders ? 'block' : 'none'};
   `}
 `

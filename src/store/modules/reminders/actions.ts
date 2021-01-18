@@ -1,4 +1,5 @@
-import { ADD_REMINDER, ReminderActionTypes, ReminderInput, REMOVE_REMINDER, SELECT_REMINDER, SET_MODAL_IS_OPEN, UPDATE_REMINDER } from "./types";
+import { DateObj } from "dates-generator";
+import { ADD_REMINDER, ReminderActionTypes, ReminderInput, REMOVE_ALL_REMINDERS, REMOVE_REMINDER, SELECT_REMINDER, SET_MODAL_IS_OPEN, UPDATE_REMINDER } from "./types";
 
 export function addReminder(data: ReminderInput): ReminderActionTypes {
   return {
@@ -35,5 +36,12 @@ export function removeReminder(id: number): ReminderActionTypes {
   return {
     type: REMOVE_REMINDER,
     payload: id
+  }
+}
+
+export function removeAllReminders(date: DateObj): ReminderActionTypes {
+  return {
+    type: REMOVE_ALL_REMINDERS,
+    payload: date
   }
 }

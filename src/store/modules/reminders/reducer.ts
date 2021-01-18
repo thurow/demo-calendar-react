@@ -1,6 +1,11 @@
 import produce from "immer"
+import moment from 'moment'
 import { SET_SELECTED_DATE } from "../calendar/types";
-import { ADD_REMINDER, Reminder, ReminderActionTypes, UpdateReminderAction, RemindersState, SELECT_REMINDER, UPDATE_REMINDER, SET_MODAL_IS_OPEN, REMOVE_REMINDER } from "./types";
+import {
+  ADD_REMINDER, Reminder, ReminderActionTypes, UpdateReminderAction,
+  RemindersState, SELECT_REMINDER, UPDATE_REMINDER, SET_MODAL_IS_OPEN,
+  REMOVE_REMINDER, REMOVE_ALL_REMINDERS
+} from "./types";
 
 export const INITIAL_STATE: RemindersState = {
   reminders: [],
@@ -42,6 +47,14 @@ export default function reminders(state = INITIAL_STATE, action: ReminderActionT
         draftState.reminders.splice(reminderToRemoveIndex, 1)
         draftState.selectedReminder = null
         draftState.isReminderModalOpen = false
+        break
+      case REMOVE_ALL_REMINDERS:
+        draftState.reminders = state.reminders.filter(x =>
+          !moment({
+            day: x.date.date,
+            month: x.date.month,
+            year: x.date.year
+          }).isSame(action.payload, 'day'))
         break
       default:
     }

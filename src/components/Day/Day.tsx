@@ -6,11 +6,12 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { useDispatch, useSelector } from 'react-redux'
 import { setSelectedDate } from '../../store/modules/calendar/actions'
 import { DayCell, DayNumber, DeleteAllRemindersBtn } from './styles'
-import { isCurrentMonth, isPastDay } from '../../utils'
+import { isPastDay } from '../../utils'
 import { Reminders } from '../Reminders'
 import { removeAllReminders } from '../../store/modules/reminders/actions';
 import { RemindersState } from '../../store/modules/reminders/types';
 import { RootState } from '../../store/modules/rootReducer';
+import { CalendarState } from '../../store/modules/calendar/types';
 
 type Props = {
   date: DateObj
@@ -20,10 +21,11 @@ type Props = {
 export const Day = ({ date, isWeekend }: Props): JSX.Element => {
   const dispatch = useDispatch()
   const { reminders } = useSelector<RootState, RemindersState>(state => state.reminders)
+  const { selectedMonth } = useSelector<RootState, CalendarState>(state => state.calendar)
 
   const isFromOtherMonth = React.useMemo(() => {
-    return !isCurrentMonth(date.month)
-  }, [date])
+    return date.month !== selectedMonth
+  }, [date, selectedMonth])
 
   const pastDay = React.useMemo(() => {
     return isPastDay(date)

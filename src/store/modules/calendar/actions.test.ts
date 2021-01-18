@@ -17,4 +17,18 @@ describe('calendar actions', () => {
 
     expect(actions.setSelectedDate(DATE_INPUT)).toEqual(EXPECTED_ACTION)
   })
+  test('should create an action to set calendar to next month', () => {
+    const EXPECTED_ACTION: types.CalendarActionTypes = {
+      type: types.SET_NEXT_MONTH_CALENDAR
+    }
+
+    expect(actions.setNextMonthCalendar()).toEqual(EXPECTED_ACTION)
+  })
+  test('should create an action to set calendar to previous month', () => {
+    const EXPECTED_ACTION: types.CalendarActionTypes = {
+      type: types.SET_PREVIOUS_MONTH_CALENDAR
+    }
+
+    expect(actions.setPreviousMonthCalendar()).toEqual(EXPECTED_ACTION)
+  })
 })

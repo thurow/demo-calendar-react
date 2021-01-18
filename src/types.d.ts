@@ -15,6 +15,11 @@ declare module 'dates-generator' {
 
   interface DatesGenerator {
     dates: Dates[]
+    nextMonth: number
+    previousMonth: number
+    nextYear: number
+    previousYear: number
   }
+
   export function datesGenerator (body: DatesGeneratorBody): DatesGenerator
 }

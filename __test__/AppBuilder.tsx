@@ -7,6 +7,7 @@ import { App } from '../src/App'
 import { CalendarState } from '../src/store/modules/calendar/types'
 import { RemindersState } from '../src/store/modules/reminders/types'
 import { rootReducer, RootState } from '../src/store/modules/rootReducer'
+import { date, getCalendar } from '../src/utils'
 
 export interface AppBuilderProps {
   children?: React.ReactChild
@@ -17,8 +18,11 @@ export interface AppBuilderProps {
 const AppBuilder = ({ children = <App />, remindersState, calendarState }: AppBuilderProps): JSX.Element => {
   const INITIAL_STATE: RootState = {
     calendar: {
-      calendar: [],
-      weekDays: [],
+      calendar: getCalendar(),
+      weekDays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      selectedMonth: date().getMonth(),
+      selectedYear: date().getFullYear(),
       selectedDate: null,
       ...calendarState
     },

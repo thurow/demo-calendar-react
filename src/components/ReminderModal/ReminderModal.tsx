@@ -95,7 +95,7 @@ export const ReminderModal = (): JSX.Element => {
       reset({
         city: selectedReminder.city,
         color: selectedReminder.color,
-        time: moment(selectedReminder.time),
+        time: moment(selectedReminder.time, 'LT'),
         date: moment(
           {
             year: selectedReminder.date.year,
@@ -151,8 +151,8 @@ export const ReminderModal = (): JSX.Element => {
                 label="Date"
                 fullWidth
                 format="LL"
+                disablePast
                 maxDate={moment('01/31/2021')}
-                minDate={moment('01/01/2021')}
                 margin="dense"
                 inputRef={ref}
                 error={invalid}

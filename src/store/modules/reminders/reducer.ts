@@ -30,6 +30,7 @@ export default function reminders(state = INITIAL_STATE, action: ReminderActionT
         break
       case SET_MODAL_IS_OPEN:
         draftState.isReminderModalOpen = action.payload
+        draftState.selectedReminder = null
         break
       case SELECT_REMINDER:
         draftState.selectedReminder = state.reminders.find(x => x.id === action.payload) ?? null

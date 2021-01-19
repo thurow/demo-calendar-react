@@ -12,7 +12,6 @@ For testing purposes, run `yarn test`
 
 ## What is missing
 
-- Expand the calendar to support more than the current month
 - Persist reminders:
   - Just on Frontend: Redux Persist
   - Backend: Maybe Lambda + API Gateway + DynamoDB + Redux Sagas

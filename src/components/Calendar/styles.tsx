@@ -1,4 +1,4 @@
-import { TableCell, Theme, Table } from "@material-ui/core"
+import { TableCell, Theme, Table, Paper } from "@material-ui/core"
 import styled from "styled-components"
 
 export const HeaderTableCell = styled(TableCell)`
@@ -14,4 +14,12 @@ export const CalendarTable = styled(Table)`
     border: 1px solid ${theme.palette.divider};
   `}
   table-layout: fixed;
+`
+
+export const CalendarHeader = styled(Paper)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  margin-top: 8px;
 `

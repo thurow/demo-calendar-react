@@ -23,7 +23,6 @@ export const Reminders = ({ date }: Props): JSX.Element => {
   }, [date, reminders])
 
   const handleEditReminder = React.useCallback((e: React.MouseEvent<HTMLDivElement, MouseEvent>, id: number) => {
-    console.log('clicou', id)
     e.stopPropagation()
     e.currentTarget.blur()
     dispatch(selectReminder(id))

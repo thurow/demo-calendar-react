@@ -152,7 +152,6 @@ export const ReminderModal = (): JSX.Element => {
                 fullWidth
                 format="LL"
                 disablePast
-                maxDate={moment('01/31/2021')}
                 margin="dense"
                 inputRef={ref}
                 error={invalid}

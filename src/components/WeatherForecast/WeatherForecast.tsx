@@ -50,7 +50,7 @@ export const WeatherForecast = ({ city, date }: Props): JSX.Element => {
             <img src={`http://openweathermap.org/img/w/${weatherForecastToDate.icon}.png`} />}
           <Typography variant="body1">{weatherForecastToDate.main}</Typography>
         </Box>
-      ): <Typography variant="caption">No data.</Typography>}
+      ): <Typography variant="caption">Unavailable data.</Typography>}
     </Box>
   )
 }

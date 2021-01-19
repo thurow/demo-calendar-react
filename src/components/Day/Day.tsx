@@ -79,7 +79,7 @@ export const Day = ({ date, isWeekend }: Props): JSX.Element => {
           $pastDay={pastDay}
           variant="body2"
         >
-          {date.date}<br />
+          {date.date}
         </DayNumber>
         <Reminders date={date} />
       </Box>

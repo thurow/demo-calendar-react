@@ -1,9 +1,11 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button, Container, TableBody, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core'
+import { Container, IconButton, TableBody, TableContainer, TableHead, TableRow, Tooltip, Typography } from '@material-ui/core'
+import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
+import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounded';
 import { CalendarState } from '../../store/modules/calendar/types'
 import { RootState } from '../../store/modules/rootReducer'
-import { CalendarTable, HeaderTableCell } from './styles'
+import { CalendarHeader, CalendarTable, HeaderTableCell } from './styles'
 import { Day } from '../Day'
 import { setNextMonthCalendar, setPreviousMonthCalendar } from '../../store/modules/calendar/actions'
 
@@ -13,9 +15,27 @@ const Calendar = (): JSX.Element => {
 
   return (
     <Container maxWidth="lg" component="section">
-      <Button onClick={() => dispatch(setPreviousMonthCalendar())}>Previous Month</Button>
-      <Typography>{months[selectedMonth]} / {selectedYear}</Typography>
-      <Button onClick={() => dispatch(setNextMonthCalendar())}>Next Month</Button>
+      <CalendarHeader
+        variant="outlined"
+        component="header"
+        square
+      >
+        <Tooltip
+          title="Previous month"
+        >
+          <IconButton color="primary" onClick={() => dispatch(setPreviousMonthCalendar())}>
+            <ArrowBackIosRoundedIcon />
+          </IconButton>
+        </Tooltip>
+        <Typography variant="h5" component="h2">{months[selectedMonth]} / {selectedYear}</Typography>
+        <Tooltip
+          title="Next month"
+        >
+          <IconButton color="primary" onClick={() => dispatch(setNextMonthCalendar())}>
+            <ArrowForwardIosRoundedIcon />
+          </IconButton>
+        </Tooltip>
+      </CalendarHeader>
       <TableContainer>
         <CalendarTable size="small">
           <TableHead>

@@ -3,8 +3,7 @@ import { DateObj } from 'dates-generator'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../store/modules/rootReducer'
 import { RemindersState } from '../../store/modules/reminders/types'
-import { Box } from '@material-ui/core'
-import { ReminderChip } from './styles'
+import { ReminderChip, RemindersListContainer } from './styles'
 import { filterByDate, sortByHour } from '../../utils'
 import { removeReminder, selectReminder } from '../../store/modules/reminders/actions'
 
@@ -29,11 +28,10 @@ export const Reminders = ({ date }: Props): JSX.Element => {
   }, [dispatch])
 
   return (
-    <Box
+    <RemindersListContainer
       display="flex"
       flexDirection="column"
       height="80px"
-      overflow="scroll"
       paddingTop={1}
       paddingBottom={1}
     >
@@ -47,6 +45,6 @@ export const Reminders = ({ date }: Props): JSX.Element => {
           onDelete={() => dispatch(removeReminder(reminder.id))}
         />
       )}
-    </Box>
+    </RemindersListContainer>
   )
 }
